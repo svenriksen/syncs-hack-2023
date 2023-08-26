@@ -1,6 +1,6 @@
 from objects import User,Book
-from getpass import getpass
-CLARIFAI_PAT = getpass()
+import settings
+CLARIFAI_PAT = settings.OPENAI_API_KEY
 from langchain.llms import Clarifai
 from langchain import PromptTemplate, LLMChain
 import re
