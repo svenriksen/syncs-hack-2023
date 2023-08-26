@@ -1,33 +1,96 @@
-from objects import User,Book
-import settings
 import os
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = settings.API_KEY
-from langchain import HuggingFaceHub
-from langchain.llms import Clarifai
-from langchain import PromptTemplate, LLMChain
-import json
-template = """Question: {question}
-Additional information, these are books that users have read, it might have ratings on a scale of 10 (1 is the lowest and 10 is the highest). Please based on the book that they read, how many times they read them, and their ratings for the book to better evalute your reccommendation of books. Below are the books
-{books}
 
-Answer: Short and to the point. Give me 10 and link on amazon. Please return the name of the books and the url of each book on amazon in json and store it in the variable called books."""
+PAT = os.getenv("CLARIFAI_KEY")
+USER_ID = 'openai'
+APP_ID = 'chat-completion'
+MODEL_ID = 'GPT-3_5-turbo'
+MODEL_VERSION_ID = '8ea3880d08a74dc0b39500b99dfaa376'
+TEXT_FILE_URL = './request.txt'
 
-prompt = PromptTemplate(template=template, input_variables=["question", "books"])
+############################################################################
+# YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
+############################################################################
 
-huggingface_llm = HuggingFaceHub(repo_id="google/flan-t5-xl", model_kwargs={"temperature":0, "max_length":1000})
+from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
+from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
+from clarifai_grpc.grpc.api.status import status_code_pb2
+with open(TEXT_FILE_URL) as f:
+    files_bytes = f.read()
+channel = ClarifaiChannel.get_grpc_channel()
+stub = service_pb2_grpc.V2Stub(channel)
 
-llm_chain = LLMChain(prompt=prompt, llm=huggingface_llm)
+metadata = (('authorization', 'Key ' + PAT),)
 
-def getRec(prompt : str, books):
-    a = llm_chain.run({'question':prompt, 'books':books})
-    print(a)
-    a = json.loads(a)
-    print(a)
-    json.dumps(a,indent=2)
-    print(a)
-    return a
+userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
+
+post_model_outputs_response = stub.PostModelOutputs(
+    service_pb2.PostModelOutputsRequest(
+        user_app_id=userDataObject,  # The userDataObject is created in the overview and is required when using a PAT
+        model_id=MODEL_ID,
+        version_id=MODEL_VERSION_ID,  # This is optional. Defaults to the latest model version
+        inputs=[
+            resources_pb2.Input(
+                data=resources_pb2.Data(
+                    text=resources_pb2.Text(
+                        raw=files_bytes
+                    )
+                )
+            )
+        ]
+    ),
+    metadata=metadata
+)
+if post_model_outputs_response.status.code != status_code_pb2.SUCCESS:
+    
+    raise Exception(f"Post model outputs failed, status: {post_model_outputs_response.status.code}")
+
+# Since we have one input, one output will exist here
+output = post_model_outputs_response.outputs[0]
+
+print("Completion:\n")
+print(output.data.text.raw)
+
+from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
+from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
+from clarifai_grpc.grpc.api.status import status_code_pb2
+
+
+channel = ClarifaiChannel.get_grpc_channel()
+stub = service_pb2_grpc.V2Stub(channel)
+
+metadata = (('authorization', 'Key ' + PAT),)
+
+userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
+
+def getRec(prompt : str):
+    prompt = f"""Question: {prompt}
+Answer: Give me 5 books and amazon link in json list the following format"""
+    post_model_outputs_response = stub.PostModelOutputs(
+        service_pb2.PostModelOutputsRequest(
+            user_app_id=userDataObject,  # The userDataObject is created in the overview and is required when using a PAT
+            model_id=MODEL_ID,
+            version_id=MODEL_VERSION_ID,  # This is optional. Defaults to the latest model version
+            inputs=[
+                resources_pb2.Input(
+                    data=resources_pb2.Data(
+                        text=resources_pb2.Text(
+                            raw=prompt
+                        )
+                    )
+                )
+            ]
+        ),
+        metadata=metadata
+    )
+    if post_model_outputs_response.status.code != status_code_pb2.SUCCESS:
+        
+        raise Exception(f"Post model outputs failed, status: {post_model_outputs_response.status.code}")
+
+    # Since we have one input, one output will exist here
+    output = post_model_outputs_response.outputs[0]
+    return output.data.text.raw
 
 if __name__ == "__main__":
-    question = "What book title would a person who likes cooking like to read? return the name of the books and the url of each book on amazon in json."
-    # run chain and store result
-    print(getRec(question,[]))
+    print("Completion:\n")
+    print(getRec("find me books on cooking fish"))
+

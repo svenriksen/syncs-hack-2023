@@ -26,11 +26,11 @@ def recommend_books():
         'past_books': past_books
     }
 
-    recommended_books = getRec(prompt,past_books) #recommend_books_for_user(past_books)  # Replace with your recommendation logic
+    recommended_books = getRec(prompt) #recommend_books_for_user(past_books)  # Replace with your recommendation logic
 
 
     return recommended_books
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000)
+    app.run(debug=True)
 
