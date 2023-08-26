@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from prompt import getRec
 from objects import Book
 import json
+import base64
 
 app = Flask(__name__)
 
@@ -30,6 +31,25 @@ def recommend_books():
 
 
     return recommended_books
+@app.route('/upload', methods=['POST'])
+def upload_content():
+    data = request.json
+
+    user_id = data.get('accID')
+    filename = data.get('filename')
+    content_base64 = data.get('content')
+
+    if not user_id or not filename or not content_base64:
+        return jsonify({'error': 'userID, filename, and content are required'}), 400
+
+    save_content(user_id, filename, content_base64)
+
+    return jsonify({'message': 'Content uploaded successfully'})
+
+def save_content(user_id, filename, content_base64):
+    # In a real application, you would save the content to a file or database
+    # For demonstration purposes, we'll just print the decoded content here
+    print(f"Content for user {user_id}, filename {filename}:\n{content_base64}")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001)

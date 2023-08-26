@@ -3,9 +3,8 @@ import settings,os
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_KEY",default="")
 from langchain import PromptTemplate, LLMChain
 import json
-template = """Question: {question}.give me 10 and link on amazon. Return the name of the books and the url of each book on amazon"""# in json list.
-#"""
-#Answer: Short and to the point. """
+template = """Question: {question}.give me 2 book names and link on amazon. Return the name of the books and the url of each book on amazon in a json list.
+Answer: Short and to the point. """
 from langchain.llms import OpenAI
 
 prompt = PromptTemplate(template=template, input_variables=["question"])
