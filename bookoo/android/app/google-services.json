@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1084362060261",
+    "project_id": "bookoo-syncs",
+    "storage_bucket": "bookoo-syncs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084362060261:android:809a3f0d20c8a53a263f0c",
+        "android_client_info": {
+          "package_name": "com.example.bookoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084362060261-03m54n9ng2e5cr1om207cpcunqn0jg4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG8m96KFZfIoTYtne0cfUAFFjIfWwzuyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084362060261-03m54n9ng2e5cr1om207cpcunqn0jg4t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1084362060261-7vdgsm0t9irg3nce9vhnjcja05as50v3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bookoo.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
