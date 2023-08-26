@@ -1,3 +1,4 @@
+import 'package:bookoo/auth/user_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../pages/home.dart';
@@ -15,6 +16,26 @@ class _LoginState extends State<Login> {
   );
 
   @override
+  void initState() {
+    alreadyLoggedInCheck();
+    super.initState();
+
+  }
+
+  void alreadyLoggedInCheck() {
+    var isInfoSaved = UserPreferences.getUsername() != '' ? true : false;
+    debugPrint(isInfoSaved.toString()); 
+    if (isInfoSaved == true) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Home(),
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,8 +47,12 @@ class _LoginState extends State<Login> {
             onPressed: () async {
               try {
                 dynamic result = await _googleSignIn.signIn();
-                // debugPrint(result.toString());
+                
                 if (result != null) {
+                  await UserPreferences.setUsername(result.displayName);
+                  await UserPreferences.setId(result.id);
+                  await UserPreferences.setPhotoUrl(result.photoUrl);
+
                   if (!context.mounted) return;
                   Navigator.pushReplacement(
                     context,
@@ -37,8 +62,6 @@ class _LoginState extends State<Login> {
                   );
                 }
               } catch (error) {
-                debugPrint('------------------');
-                // debugPrint(result);
                 debugPrint(error.toString());
               }
             },
