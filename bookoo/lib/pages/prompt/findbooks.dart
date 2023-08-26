@@ -32,36 +32,38 @@ class _FindBookState extends State<FindBook> {
         child: Form(
             key: _formKey,
             child: Column(
-
               children: [
                 TextFormField(
-                  decoration: const InputDecoration(
-                    hintText:
-                        "Using your imagination, describe the book you want to read",
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
+                    decoration: const InputDecoration(
+                      hintText:
+                          "Using your imagination, describe the book you want to read",
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                    ),
+                    maxLines: 7,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please let us know what are you looking for!';
+                      }
+                      return null;
+                    },
+                    controller: myController),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: OutlinedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            var inputText = myController.text;
+                            debugPrint(inputText);
+                          }
+                        },
+                        child: const Text("Find")),
                   ),
-                  maxLines: 7,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please let us know what are you looking for!';
-                    }
-                    return null;
-                  },
-                  controller: myController
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      var inputText = myController.text;
-                      debugPrint(inputText);
-                    }
-                  }, 
-                  child: const Text("Find")
                 )
               ],
             )),
-
       ),
     );
   }

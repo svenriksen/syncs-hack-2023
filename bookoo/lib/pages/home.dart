@@ -1,4 +1,5 @@
 import 'package:bookoo/auth/user_preference.dart';
+import 'package:bookoo/pages/components/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:flutter/widgets.dart';
@@ -6,6 +7,7 @@ import '../auth/login.dart';
 
 import 'firstpage.dart';
 import 'prompt/findbooks.dart';
+import 'components/appbar.dart';
 
 class Home extends StatefulWidget {
   Home({super.key, this.index = 0});
@@ -14,45 +16,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class CustomGoogleIdentity implements GoogleIdentity {
-  CustomGoogleIdentity(this.data) {
-    pdisplayName = data["Displayname"]!;
-    pemail = "";
-    pid = data["ID"]!;
-    pphotoUrl = data["URL"]!;
-  }
-
-  Map<String, String> data;
-  String pdisplayName = "";
-
-  String pemail = "";
-
-  String pid = "";
-
-  String pphotoUrl = "";
-  @override
-  String get id => pid;
-
-  @override
-  String get email => pemail;
-
-  @override
-  String? get displayName => pdisplayName;
-
-  @override
-  String? get photoUrl => pphotoUrl;
-
-  @override
-  String? get serverAuthCode => "";
-}
-
 class _HomeState extends State<Home> {
-  CustomGoogleIdentity userAccount = CustomGoogleIdentity({
-    "Displayname": UserPreferences.getUsername(),
-    "ID": UserPreferences.getId(),
-    "URL": UserPreferences.getPhotoUrl()
-  });
-
   int pageIndex = 0;
   @override
   void initState() {
@@ -83,20 +47,7 @@ class _HomeState extends State<Home> {
               label: "Find Book"),
         ],
       ),
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("Hi, ${userAccount.displayName}"),
-        elevation: 5,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: GestureDetector(
-                onTap: () {},
-                child: GoogleUserCircleAvatar(identity: userAccount)),
-
-          )
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: <Widget>[
         const SingleChildScrollView(
           child: Padding(

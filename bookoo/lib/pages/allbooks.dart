@@ -1,7 +1,5 @@
+import 'package:bookoo/pages/components/appbar.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
-import '../auth/user_preference.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AllBooks extends StatefulWidget {
   const AllBooks({super.key});
@@ -11,28 +9,12 @@ class AllBooks extends StatefulWidget {
 }
 
 class _AllBooksState extends State<AllBooks> {
-  CustomGoogleIdentity userAccount = CustomGoogleIdentity({
-    "Displayname": UserPreferences.getUsername(),
-    "ID": UserPreferences.getId(),
-    "URL": UserPreferences.getPhotoUrl()
-  });
-
   List<int> entries = [1, 2, 3, 4, 5, 6, 7];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: const Text("All saved books"),
-        elevation: 5,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: GoogleUserCircleAvatar(identity: userAccount),
-          )
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: ListView.builder(

@@ -44,31 +44,35 @@ class _LoginState extends State<Login> {
         elevation: 5,
       ),
       body: Center(
-        child: Column(children: [
-          ElevatedButton(
-              onPressed: () async {
-                try {
-                  dynamic result = await _googleSignIn.signIn();
+        child: Padding(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            ElevatedButton(
+                onPressed: () async {
+                  try {
+                    dynamic result = await _googleSignIn.signIn();
 
-                  if (result != null) {
-                    await UserPreferences.setUsername(result.displayName);
-                    await UserPreferences.setId(result.id);
-                    await UserPreferences.setPhotoUrl(result.photoUrl);
+                    if (result != null) {
+                      await UserPreferences.setUsername(result.displayName);
+                      await UserPreferences.setId(result.id);
+                      await UserPreferences.setPhotoUrl(result.photoUrl);
 
-                    if (!context.mounted) return;
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ),
-                    );
+                      if (!context.mounted) return;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ),
+                      );
+                    }
+                  } catch (error) {
+                    debugPrint(error.toString());
                   }
-                } catch (error) {
-                  debugPrint(error.toString());
-                }
-              },
-              child: const Text("Sign in with Google"))
-        ]),
+                },
+                child: const Text("Sign in with Google"))
+          ]),
+        ),
       ),
     );
   }
