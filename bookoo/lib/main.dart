@@ -1,8 +1,9 @@
+import 'package:bookoo/auth/user_preference.dart';
 import 'package:flutter/material.dart';
 import 'auth/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +12,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await UserPreferences.init();
+  
   runApp(const MyApp());
 }
 

@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
             onPressed: () async {
               try {
                 dynamic result = await _googleSignIn.signIn();
-                debugPrint(result.toString());
+                // debugPrint(result.toString());
                 if (result != null) {
                   if (!context.mounted) return;
                   Navigator.pushReplacement(
@@ -37,6 +37,8 @@ class _LoginState extends State<Login> {
                   );
                 }
               } catch (error) {
+                debugPrint('------------------');
+                // debugPrint(result);
                 debugPrint(error.toString());
               }
             },
