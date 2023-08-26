@@ -17,8 +17,12 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   FilePickerResult? result;
   late bool isFilePicked;
+  late SnackBar snackBar;
   @override
   void initState() {
+    snackBar = const SnackBar(
+      content: Text('Yay! A SnackBar!'),
+    );
     isFilePicked = false;
     super.initState();
   }
@@ -84,9 +88,12 @@ class _AddState extends State<Add> {
 
                                 final bytes = file.readAsBytesSync();
                                 String fileInString = base64Encode(bytes);
-                                // debugPrint('debug file');
-                                // debugPrint(fileInString);
-                                await UserPreferences.setUploadedBooks(fileInString);
+
+                                await UserPreferences.setUploadedBooks(
+                                    fileInString);
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               }
                             : null),
                         child: const Text("Submit")),

@@ -1,6 +1,10 @@
 import 'package:bookoo/pages/components/appbar.dart';
 import 'package:bookoo/pages/read.dart';
 import 'package:flutter/material.dart';
+import '../auth/user_preference.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class AllBooks extends StatefulWidget {
   const AllBooks({super.key});
@@ -9,8 +13,17 @@ class AllBooks extends StatefulWidget {
   State<AllBooks> createState() => _AllBooksState();
 }
 
+Future<File> _writeFileByte(String? file) async {
+  String dir = (await getApplicationDocumentsDirectory()).path;
+  PdfDocument document = PdfDocument.fromBase64String(file!);
+
+  List<int> bytes = await document.save();
+  File('$dir/output.pdf').writeAsBytes(bytes!);
+  return File('$dir/output.pdf');
+}
+
 class _AllBooksState extends State<AllBooks> {
-  List<int> entries = [1, 2, 3, 4, 5, 6, 7];
+  List<String> entries = UserPreferences.getUploadedBooks();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +34,10 @@ class _AllBooksState extends State<AllBooks> {
           child: ListView.builder(
               itemCount: entries.length,
               itemBuilder: (BuildContext context, index) {
+                late File file;
+                _writeFileByte(entries[index]).then((value) {
+                  file = value;
+                });
                 //use container to create a box
                 return GestureDetector(
                   onTap: () {
