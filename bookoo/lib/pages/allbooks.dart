@@ -21,7 +21,7 @@ class _AllBooksState extends State<AllBooks> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text("Home"),
+        title: const Text("All saved books"),
         elevation: 5,
         actions: [
           Padding(

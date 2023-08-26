@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../auth/login.dart';
 
 import 'firstpage.dart';
+import 'prompt/findbooks.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -96,7 +97,7 @@ class _HomeState extends State<Home> {
           child: Padding(
               padding: EdgeInsets.fromLTRB(15, 50, 15, 0), child: FirstPage()),
         ),
-        const Text("Find Book"),
+        const FindBook(),
       ][pageIndex],
     );
   }

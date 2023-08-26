@@ -126,7 +126,7 @@ class _FirstPageState extends State<FirstPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AllBooks()),
+                  MaterialPageRoute(builder: (context) => const AllBooks()),
                 );
               },
               child: const Text("See all")),
