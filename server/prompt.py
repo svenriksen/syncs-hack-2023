@@ -1,8 +1,6 @@
 from objects import User,Book
 import settings
-import os
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = settings.API_KEY
-from langchain import HuggingFaceHub
+CLARIFAI_PAT = settings.OPENAI_API_KEY
 from langchain.llms import Clarifai
 from langchain import PromptTemplate, LLMChain
 import json
@@ -13,10 +11,15 @@ Additional information, these are books that users have read, it might have rati
 Answer: Short and to the point. Give me 10 and link on amazon. Please return the name of the books and the url of each book on amazon in json and store it in the variable called books."""
 
 prompt = PromptTemplate(template=template, input_variables=["question", "books"])
+USER_ID = "openai" #info about model
+APP_ID = "chat-completion"
+MODEL_ID = "GPT-3_5-turbo"
 
-huggingface_llm = HuggingFaceHub(repo_id="google/flan-t5-xl", model_kwargs={"temperature":0, "max_length":1000})
+clarifai_llm = Clarifai(
+    pat=CLARIFAI_PAT, user_id=USER_ID, app_id=APP_ID, model_id=MODEL_ID
+)
 
-llm_chain = LLMChain(prompt=prompt, llm=huggingface_llm)
+llm_chain = LLMChain(prompt=prompt, llm=clarifai_llm)
 
 def getRec(prompt : str, books):
     a = llm_chain.run({'question':prompt, 'books':books})
