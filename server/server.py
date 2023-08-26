@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Sample data - replace this with your own data source or database
 user_profiles = {}
 
-@app.route('/recommend', methods=['POST'])
+@app.route('/', methods=['POST'])
 def recommend_books():
     data = request.json
 
