@@ -25,7 +25,13 @@ class _FindBookState extends State<FindBook> {
               ),
               maxLines: 7,
             ),
-            OutlinedButton(onPressed: () {}, child: const Text("Find"))
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                      onPressed: () {}, child: const Text("Find"))),
+            )
           ],
         )),
       ),

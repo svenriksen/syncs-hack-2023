@@ -25,12 +25,14 @@ class _LoginState extends State<Login> {
     var isInfoSaved = UserPreferences.getUsername() != '' ? true : false;
 
     if (isInfoSaved == true) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Home(),
-        ),
-      );
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      });
     }
   }
 
@@ -56,7 +58,7 @@ class _LoginState extends State<Login> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Home(),
+                      builder: (context) => Home(),
                     ),
                   );
                 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'allbooks.dart';
+import 'home.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
@@ -124,12 +125,33 @@ class _FirstPageState extends State<FirstPage> {
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: OutlinedButton(
               onPressed: () {
+                WidgetsBinding.instance!.addPostFrameCallback((_) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Home(
+                              index: 1,
+                            )),
+                  );
+                });
+              },
+              child: const Row(
+                children: [
+                  Icon(Icons.search),
+                  Text("Search for the book you want")
+                ],
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          child: OutlinedButton(
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const AllBooks()),
                 );
               },
-              child: const Text("See all")),
+              child: const Text("See all saved books")),
         ),
       ],
     );

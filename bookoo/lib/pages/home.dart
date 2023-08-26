@@ -8,7 +8,8 @@ import 'firstpage.dart';
 import 'prompt/findbooks.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  Home({super.key, this.index = 0});
+  int index;
   @override
   State<Home> createState() => _HomeState();
 }
@@ -55,6 +56,7 @@ class _HomeState extends State<Home> {
   int pageIndex = 0;
   @override
   void initState() {
+    pageIndex = widget.index;
     UserPreferences.getUsername();
     super.initState();
   }
@@ -88,7 +90,9 @@ class _HomeState extends State<Home> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: GoogleUserCircleAvatar(identity: userAccount),
+            child: GestureDetector(
+                onTap: () {},
+                child: GoogleUserCircleAvatar(identity: userAccount)),
           )
         ],
       ),

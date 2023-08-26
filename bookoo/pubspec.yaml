@@ -42,6 +42,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   firebase_crashlytics: ^3.3.5
   shared_preferences: ^2.2.0
+  http: ^1.1.0
 
 
 dev_dependencies:
