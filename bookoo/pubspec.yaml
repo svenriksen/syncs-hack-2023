@@ -41,6 +41,8 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_rating_bar: ^4.0.1
   firebase_crashlytics: ^3.3.5
+  shared_preferences: ^2.2.0
+
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +54,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  shared_preferences: ^2.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

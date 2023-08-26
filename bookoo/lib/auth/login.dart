@@ -19,12 +19,11 @@ class _LoginState extends State<Login> {
   void initState() {
     alreadyLoggedInCheck();
     super.initState();
-
   }
 
-  void alreadyLoggedInCheck() {
+  void alreadyLoggedInCheck() async {
     var isInfoSaved = UserPreferences.getUsername() != '' ? true : false;
-    debugPrint(isInfoSaved.toString()); 
+
     if (isInfoSaved == true) {
       Navigator.pushReplacement(
         context,
@@ -47,7 +46,7 @@ class _LoginState extends State<Login> {
             onPressed: () async {
               try {
                 dynamic result = await _googleSignIn.signIn();
-                
+
                 if (result != null) {
                   await UserPreferences.setUsername(result.displayName);
                   await UserPreferences.setId(result.id);
@@ -57,7 +56,7 @@ class _LoginState extends State<Login> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Home(url: result),
+                      builder: (context) => const Home(),
                     ),
                   );
                 }

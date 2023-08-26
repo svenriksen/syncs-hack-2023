@@ -4,22 +4,56 @@ import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:flutter/widgets.dart';
 import '../auth/login.dart';
 
-
 import 'firstpage.dart';
 
 class Home extends StatefulWidget {
-  Home({super.key, required this.url});
-  GoogleSignInAccount url;
+  const Home({super.key});
   @override
   State<Home> createState() => _HomeState();
 }
 
+class CustomGoogleIdentity implements GoogleIdentity {
+  CustomGoogleIdentity(this.data) {
+    pdisplayName = data["Displayname"]!;
+    pemail = "";
+    pid = data["ID"]!;
+    pphotoUrl = data["URL"]!;
+  }
+
+  Map<String, String> data;
+  String pdisplayName = "";
+
+  String pemail = "";
+
+  String pid = "";
+
+  String pphotoUrl = "";
+  @override
+  String get id => pid;
+
+  @override
+  String get email => pemail;
+
+  @override
+  String? get displayName => pdisplayName;
+
+  @override
+  String? get photoUrl => pphotoUrl;
+
+  @override
+  String? get serverAuthCode => "";
+}
+
 class _HomeState extends State<Home> {
-  late GoogleIdentity avatar = widget.url;
+  CustomGoogleIdentity userAccount = CustomGoogleIdentity({
+    "Displayname": UserPreferences.getUsername(),
+    "ID": UserPreferences.getId(),
+    "URL": UserPreferences.getPhotoUrl()
+  });
+
   int pageIndex = 0;
   @override
   void initState() {
-    avatar = widget.url;
     UserPreferences.getUsername();
     super.initState();
   }
@@ -53,7 +87,7 @@ class _HomeState extends State<Home> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: GoogleUserCircleAvatar(identity: avatar),
+            child: GoogleUserCircleAvatar(identity: userAccount),
           )
         ],
       ),
@@ -64,7 +98,6 @@ class _HomeState extends State<Home> {
         ),
         const Text("Find Book"),
       ][pageIndex],
-
     );
   }
 }
