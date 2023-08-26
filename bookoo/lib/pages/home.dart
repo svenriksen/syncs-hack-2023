@@ -21,7 +21,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     pageIndex = widget.index;
-    UserPreferences.getUsername();
     super.initState();
   }
 
@@ -31,6 +30,9 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) {
           setState(() {
+            // debugPrint(UserPreferences.getUploadedBooks().toString());
+            // UserPreferences.removeBooks();
+            debugPrint(UserPreferences.getUploadedBooks().length.toString());
             debugPrint(value.toString());
             pageIndex = value;
           });

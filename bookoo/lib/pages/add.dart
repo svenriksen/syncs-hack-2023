@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'dart:async';
+import '../auth/user_preference.dart';
 
 class Add extends StatefulWidget {
   const Add({super.key});
@@ -78,12 +79,14 @@ class _AddState extends State<Add> {
                               Theme.of(context).colorScheme.primaryContainer,
                         ),
                         onPressed: (result != null
-                            ? () {
+                            ? () async {
                                 File file = File(result!.files.single.path!);
 
                                 final bytes = file.readAsBytesSync();
                                 String fileInString = base64Encode(bytes);
-                                debugPrint(fileInString);
+                                // debugPrint('debug file');
+                                // debugPrint(fileInString);
+                                await UserPreferences.setUploadedBooks(fileInString);
                               }
                             : null),
                         child: const Text("Submit")),
