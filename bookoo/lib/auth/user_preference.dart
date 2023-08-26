@@ -10,6 +10,9 @@ class UserPreferences {
   static bool booksAdded = false;
   static const _keyUploadedBooks = 'uploadedBooks';
 
+  static bool recentlyRead = false;
+  static const _keyRecentlyRead = 'recentlyRead';
+
   static Future init() async {
     _preferences = await SharedPreferences.getInstance();
   }
@@ -39,6 +42,18 @@ class UserPreferences {
     }
   }
 
+  static Future setRecentlyRead(String book) async {
+    if (recentlyRead == false) {
+      recentlyRead = true;
+      return await _preferences?.setStringList(_keyRecentlyRead, [book]);
+    }
+    else {
+      List<String> addedBooks = _preferences?.getStringList(_keyRecentlyRead) ?? [];
+      addedBooks.add(book);
+      return await _preferences?.setStringList(_keyRecentlyRead, addedBooks);
+    }
+  }
+
   static String getUsername() => _preferences?.getString(_keyUsername) ?? '';
 
   static String getId() => _preferences?.getString(_keyId) ?? '';
@@ -46,6 +61,8 @@ class UserPreferences {
   static String getPhotoUrl() => _preferences?.getString(_keyPhotoUrl) ?? '';
 
   static List<String> getUploadedBooks() => _preferences?.getStringList(_keyUploadedBooks) ?? [];
+  
+  static List<String> getRecentlyRead() => _preferences?.getStringList(_keyRecentlyRead) ?? [];
 
   static void removePreferences() {
     _preferences?.remove(_keyUsername);
@@ -54,7 +71,11 @@ class UserPreferences {
   }
 
   // debugging purposes
-  static void removeBooks() {
+  static void removeUploadedBooks() {
     _preferences?.remove(_keyUploadedBooks);
+  }
+
+  static void removeRecentlyRead() {
+    _preferences?.remove(_keyRecentlyRead);
   }
 }

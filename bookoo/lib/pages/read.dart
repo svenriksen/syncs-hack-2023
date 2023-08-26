@@ -1,3 +1,4 @@
+import 'package:bookoo/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
@@ -22,7 +23,7 @@ Future<File> _writeFileByte(String? file) async {
 }
 
 class _ReadBookState extends State<ReadBook> {
-  String? file;
+  late String file;
   late List<String> books;
   List<int>? bytes;
   late PdfDocument document;
@@ -32,23 +33,61 @@ class _ReadBookState extends State<ReadBook> {
     books = UserPreferences.getUploadedBooks();
 
     file = widget.base64;
-    print(file);
+    // print(file);
     // bytes = base64Decode(file!);
+
+    UserPreferences.setRecentlyRead(file);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Color filtercolor = Colors.red;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Read Book"),
         elevation: 5,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
+          PopupMenuButton<String>(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10)
+              )
+            ),
+            onSelected: (String value){
+              if (value == 'nine') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );
+              if(value == 'ten'){
+                
+              }
+              if(value == 'eleven'){
+                filtercolor = Colors.blue;
+              }
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'nine',
+                child: Text("MonteNete"),
+                
+              ),
+              const PopupMenuItem(
+                value: 'ten',
+                child: Text("Change Music"),
+                
+              ),
+              const PopupMenuItem(
+                value: 'eleve',
+                child: Text("Eye Care"),
+                
+              )
+            
+            ],
+          )
         ],
       ),
       body: Padding(
@@ -75,5 +114,7 @@ class _ReadBookState extends State<ReadBook> {
             : const Center(child: Text("No book found")),
       ),
     );
+    
+    
   }
 }
