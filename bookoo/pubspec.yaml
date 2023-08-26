@@ -48,6 +48,7 @@ dependencies:
   syncfusion_flutter_pdf: ^22.2.10
   syncfusion_flutter_pdfviewer: ^22.2.10
   path_provider: ^2.1.0
+  thumbnailer: ^2.2.0
 
 
 dev_dependencies:

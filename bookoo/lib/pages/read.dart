@@ -1,4 +1,3 @@
-import 'package:bookoo/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
@@ -28,6 +27,11 @@ class _ReadBookState extends State<ReadBook> {
   List<int>? bytes;
   late PdfDocument document;
   late String dir;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final myController = TextEditingController();
+
   @override
   void initState() {
     books = UserPreferences.getUploadedBooks();
@@ -51,41 +55,74 @@ class _ReadBookState extends State<ReadBook> {
         actions: [
           PopupMenuButton<String>(
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10)
-              )
-            ),
-            onSelected: (String value){
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            onSelected: (String value) {
               if (value == 'nine') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );
-              if(value == 'ten'){
-                
-              }
-              if(value == 'eleven'){
-                filtercolor = Colors.blue;
-              }
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: const Text("Pomodoro"),
+                          content: Stack(children: [
+                            const Text("Set your timer here"),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Form(
+                                  key: _formKey,
+                                  child: TextFormField(
+                                    controller: myController,
+                                    decoration: const InputDecoration(
+                                      hintText: "Enter your time here",
+                                      border: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.black)),
+                                    ),
+                                    maxLines: 1,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your time';
+                                      }
+
+                                      //validate time
+
+                                      return null;
+                                    },
+                                  )),
+                            )
+                          ]),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Cancel")),
+                            TextButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    var inputText = myController.text;
+                                    debugPrint(inputText);
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Start"))
+                          ],
+                        ));
+                if (value == 'ten') {}
+                if (value == 'eleven') {}
               }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
                 value: 'nine',
-                child: Text("MonteNete"),
-                
+                child: Text("Pomodoro"),
               ),
               const PopupMenuItem(
                 value: 'ten',
                 child: Text("Change Music"),
-                
               ),
               const PopupMenuItem(
                 value: 'eleve',
                 child: Text("Eye Care"),
-                
               )
-            
             ],
           )
         ],
@@ -114,7 +151,5 @@ class _ReadBookState extends State<ReadBook> {
             : const Center(child: Text("No book found")),
       ),
     );
-    
-    
   }
 }

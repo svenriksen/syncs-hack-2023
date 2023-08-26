@@ -21,7 +21,7 @@ class _AddState extends State<Add> {
   @override
   void initState() {
     snackBar = const SnackBar(
-      content: Text('Yay! A SnackBar!'),
+      content: Text('Add book successfully'),
     );
     isFilePicked = false;
     super.initState();

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import 'dart:convert';
 
 class FindBook extends StatefulWidget {
   const FindBook({super.key});
@@ -53,10 +56,24 @@ class _FindBookState extends State<FindBook> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: OutlinedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             var inputText = myController.text;
                             debugPrint(inputText);
+
+                            final response = await http.post(
+                                Uri.parse(
+                                    'http://syncs-hack-2023.vercel.app:3000/recommend'),
+                                headers: <String, String>{
+                                  'Content-Type':
+                                      'application/json; charset=UTF-8',
+                                },
+                                body: jsonEncode(<String, dynamic>{
+                                  "accID": "123",
+                                  "prompt": inputText,
+                                  "past_books": ""
+                                }));
+                            debugPrint(response.body);
                           }
                         },
                         child: const Text("Find")),

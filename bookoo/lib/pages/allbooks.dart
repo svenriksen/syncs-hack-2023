@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:bookoo/pages/components/appbar.dart';
 import 'package:bookoo/pages/read.dart';
 import 'package:flutter/material.dart';
 import '../auth/user_preference.dart';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+
+import 'package:thumbnailer/thumbnailer.dart';
 
 class AllBooks extends StatefulWidget {
   const AllBooks({super.key});
@@ -57,14 +62,21 @@ class _AllBooksState extends State<AllBooks> {
                           Flexible(
                               flex: 3,
                               child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                ),
-                                width: double.infinity,
-                                height: 120,
-                              )),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20)),
+                                  ),
+                                  width: double.infinity,
+                                  height: 120,
+                                  child: Thumbnail(
+                                      dataResolver: () async {
+                                        Uint8List bytes =
+                                            base64Decode(entries[index]);
+                                        return bytes;
+                                      },
+                                      mimeType: 'application/pdf',
+                                      widgetSize: 300))),
                           Flexible(
                             flex: 9,
                             child: Padding(
@@ -85,7 +97,7 @@ class _AllBooksState extends State<AllBooks> {
                                     const Spacer(),
                                     const Align(
                                       alignment: Alignment.bottomLeft,
-                                      child: Text("thisisafile.pdf"),
+                                      child: Text("*.pdf"),
                                     ),
                                   ],
                                 ),

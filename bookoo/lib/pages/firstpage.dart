@@ -22,7 +22,7 @@ class _FirstPageState extends State<FirstPage> {
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         const Text(
-          "Return to your past read books :)",
+          "Review your book choices here",
           style: TextStyle(fontSize: 20),
         ),
         Padding(
@@ -57,7 +57,7 @@ class _FirstPageState extends State<FirstPage> {
               )),
         ),
         const Text(
-          "Reading now",
+          "Resume your journey",
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         Padding(
