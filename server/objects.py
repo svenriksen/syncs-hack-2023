@@ -11,4 +11,16 @@ class Book:
         self.rating = rating
         self.n_read = n_read
         self.url = url
-
+    def __str__(self):
+        return f'''
+Book: {self.name}
+\tRatings: {self.rating}
+\tRead times: {self.n_read}
+\tURL: {self.url}
+'''
+    @staticmethod
+    def combineBooks(books):
+        ans = []
+        for book in books:
+            ans.append(book)
+        return ans
