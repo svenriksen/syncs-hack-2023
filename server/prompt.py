@@ -1,29 +1,12 @@
-<<<<<<< HEAD
-######################################################################################################
-# In this section, we set the user authentication, user and app ID, model details, and the URL of 
-# the text we want as an input. Change these strings to run your own example.
-######################################################################################################
-
-# Your PAT (Personal Access Token) can be found in the portal under Authentification
-import os
-PAT = os.getenv("CLARIFAI_KEY")
-# Specify the correct user_id/app_id pairings
-# Since you're making inferences outside your app's scope
-USER_ID = 'openai'
-APP_ID = 'chat-completion'
-# Change these to whatever model and text URL you want to use
-=======
 import os
 
 PAT = os.getenv("CLARIFAI_KEY")
 USER_ID = 'openai'
 APP_ID = 'chat-completion'
->>>>>>> e7c8011b5837874c75a489dfebc0b632b7bfe183
 MODEL_ID = 'GPT-3_5-turbo'
 MODEL_VERSION_ID = '8ea3880d08a74dc0b39500b99dfaa376'
 TEXT_FILE_URL = './request.txt'
 
-<<<<<<< HEAD
 ############################################################################
 # YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
 ############################################################################
@@ -66,7 +49,7 @@ output = post_model_outputs_response.outputs[0]
 
 print("Completion:\n")
 print(output.data.text.raw)
-=======
+
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
