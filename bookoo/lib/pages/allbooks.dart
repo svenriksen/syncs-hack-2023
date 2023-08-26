@@ -44,7 +44,8 @@ class _AllBooksState extends State<AllBooks> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ReadBook()));
+                            builder: (context) =>
+                                ReadBook(base64: entries[index])));
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),

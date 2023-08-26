@@ -6,8 +6,8 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class ReadBook extends StatefulWidget {
-  const ReadBook({super.key});
-
+  ReadBook({super.key, required this.base64});
+  String base64;
   @override
   State<ReadBook> createState() => _ReadBookState();
 }
@@ -31,8 +31,7 @@ class _ReadBookState extends State<ReadBook> {
   void initState() {
     books = UserPreferences.getUploadedBooks();
 
-    file = books[books.length - 1];
-    print(books.length);
+    file = widget.base64;
     print(file);
     // bytes = base64Decode(file!);
 
