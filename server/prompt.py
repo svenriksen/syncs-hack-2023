@@ -110,4 +110,4 @@ Answer: Give me 5 books and amazon link in json list the following format"""
 if __name__ == "__main__":
     print("Completion:\n")
     print(getRec("find me books on cooking fish"))
->>>>>>> e7c8011b5837874c75a489dfebc0b632b7bfe183
+
