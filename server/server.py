@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+from prompt import getRec
+import json
 
 app = Flask(__name__)
 
@@ -29,9 +31,10 @@ ratings given: {b.get("ratings")}
         'past_books': past_books
     }
 
-    recommended_books = recommend_books_for_user(past_books)  # Replace with your recommendation logic
+    recommended_books = getRec(prompt) #recommend_books_for_user(past_books)  # Replace with your recommendation logic
 
-    return jsonify({'recommendedBooks': recommended_books})
+
+    return recommended_books
 
 def recommend_books_for_user(past_books):
     # Replace this with your recommendation logic
