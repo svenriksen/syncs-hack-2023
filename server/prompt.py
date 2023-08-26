@@ -21,7 +21,7 @@ userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
 
 def getRec(prompt : str):
     prompt = f"""Question: {prompt}
-Answer: Give me 5 books and amazon link in json list format"""
+Answer: Give me 5 books and amazon link in json list the following format"""
     post_model_outputs_response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(
             user_app_id=userDataObject,  # The userDataObject is created in the overview and is required when using a PAT

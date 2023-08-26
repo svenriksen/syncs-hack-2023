@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from test import getRec
+from prompt import getRec
 from objects import Book
 import json
 
