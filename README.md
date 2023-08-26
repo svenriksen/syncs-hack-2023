@@ -1,1 +1,5 @@
-# syncs-hack-2023
+# Bookoo Reading App
+
+---
+
+Stay tuned for descriptions :) 
