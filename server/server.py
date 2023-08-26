@@ -26,7 +26,7 @@ def recommend_books():
         'past_books': past_books
     }
 
-    recommended_books = getRec(prompt,past_books) #recommend_books_for_user(past_books)  # Replace with your recommendation logic
+    recommended_books = getRec(prompt) #recommend_books_for_user(past_books)  # Replace with your recommendation logic
 
 
     return recommended_books
