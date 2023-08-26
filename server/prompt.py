@@ -21,5 +21,4 @@ llm_chain = LLMChain(prompt=prompt, llm=clarifai_llm)
 question = "What book title would a person who likes cooking like to read? return the name of the books and the url of each book on amazon in json."
 # run chain and store result
 result = llm_chain.run(question)
-links = list(result.split("\n"))
 print(result)
