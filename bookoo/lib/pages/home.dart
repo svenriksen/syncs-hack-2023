@@ -88,7 +88,10 @@ class _HomeState extends State<Home> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: GoogleUserCircleAvatar(identity: userAccount),
+            child: GestureDetector(
+              
+              child: GoogleUserCircleAvatar(identity: userAccount)
+              ),
           )
         ],
       ),
