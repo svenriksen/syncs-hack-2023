@@ -93,6 +93,7 @@ class _HomeState extends State<Home> {
             child: GestureDetector(
                 onTap: () {},
                 child: GoogleUserCircleAvatar(identity: userAccount)),
+
           )
         ],
       ),
