@@ -1,0 +1,4 @@
+langchain
+clarifai
+flask
+huggingface_hub
