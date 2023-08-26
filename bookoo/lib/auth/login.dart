@@ -25,12 +25,14 @@ class _LoginState extends State<Login> {
     var isInfoSaved = UserPreferences.getUsername() != '' ? true : false;
 
     if (isInfoSaved == true) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Home(),
-        ),
-      );
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      });
     }
   }
 
@@ -41,31 +43,33 @@ class _LoginState extends State<Login> {
         title: const Text("Login"),
         elevation: 5,
       ),
-      body: Column(children: [
-        ElevatedButton(
-            onPressed: () async {
-              try {
-                dynamic result = await _googleSignIn.signIn();
+      body: Center(
+        child: Column(children: [
+          ElevatedButton(
+              onPressed: () async {
+                try {
+                  dynamic result = await _googleSignIn.signIn();
 
-                if (result != null) {
-                  await UserPreferences.setUsername(result.displayName);
-                  await UserPreferences.setId(result.id);
-                  await UserPreferences.setPhotoUrl(result.photoUrl);
+                  if (result != null) {
+                    await UserPreferences.setUsername(result.displayName);
+                    await UserPreferences.setId(result.id);
+                    await UserPreferences.setPhotoUrl(result.photoUrl);
 
-                  if (!context.mounted) return;
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Home(),
-                    ),
-                  );
+                    if (!context.mounted) return;
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Home(),
+                      ),
+                    );
+                  }
+                } catch (error) {
+                  debugPrint(error.toString());
                 }
-              } catch (error) {
-                debugPrint(error.toString());
-              }
-            },
-            child: const Text("Sign in with Google"))
-      ]),
+              },
+              child: const Text("Sign in with Google"))
+        ]),
+      ),
     );
   }
 }
