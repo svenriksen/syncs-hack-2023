@@ -49,6 +49,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^22.2.10
   path_provider: ^2.1.0
   thumbnailer: ^2.2.0
+  url_launcher: ^6.1.12
 
 
 dev_dependencies:
@@ -78,6 +79,8 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
+  assets:
+    - assets/bookoo.mp3
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

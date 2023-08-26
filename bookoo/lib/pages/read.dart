@@ -15,7 +15,7 @@ class ReadBook extends StatefulWidget {
 Future<File> _writeFileByte(String? file) async {
   String dir = (await getApplicationDocumentsDirectory()).path;
   PdfDocument document = PdfDocument.fromBase64String(file!);
-  print(file);
+
   List<int> bytes = await document.save();
   File('$dir/output.pdf').writeAsBytes(bytes!);
   return File('$dir/output.pdf');
@@ -71,7 +71,8 @@ class _ReadBookState extends State<ReadBook> {
                                   child: TextFormField(
                                     controller: myController,
                                     decoration: const InputDecoration(
-                                      hintText: "Enter your time here",
+                                      hintText:
+                                          "Enter your time here (format MM:SS))",
                                       border: UnderlineInputBorder(
                                           borderSide:
                                               BorderSide(color: Colors.black)),
@@ -81,8 +82,6 @@ class _ReadBookState extends State<ReadBook> {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter your time';
                                       }
-
-                                      //validate time
 
                                       return null;
                                     },
@@ -99,14 +98,36 @@ class _ReadBookState extends State<ReadBook> {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     var inputText = myController.text;
-                                    debugPrint(inputText);
                                   }
                                   Navigator.pop(context);
                                 },
                                 child: const Text("Start"))
                           ],
                         ));
-                if (value == 'ten') {}
+                if (value == 'ten') {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: const Text("Choose music settings"),
+                            content: Stack(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                              )
+                            ]),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Cancel")),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Start"))
+                            ],
+                          ));
+                }
                 if (value == 'eleven') {}
               }
             },
@@ -117,12 +138,8 @@ class _ReadBookState extends State<ReadBook> {
               ),
               const PopupMenuItem(
                 value: 'ten',
-                child: Text("Change Music"),
+                child: Text("Music Settings"),
               ),
-              const PopupMenuItem(
-                value: 'eleve',
-                child: Text("Eye Care"),
-              )
             ],
           )
         ],
@@ -138,9 +155,7 @@ class _ReadBookState extends State<ReadBook> {
                       snapshot.data as File,
                       initialZoomLevel: 1,
                       scrollDirection: PdfScrollDirection.vertical,
-                      onZoomLevelChanged: (PdfZoomDetails details) {
-                        print(details.newZoomLevel);
-                      },
+                      onZoomLevelChanged: (PdfZoomDetails details) {},
                     );
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error ${snapshot.error}'));
