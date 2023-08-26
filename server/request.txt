@@ -1,1 +1,0 @@
-What book would a chef like to read ? Return 3 books title with amazon link in json 

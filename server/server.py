@@ -32,5 +32,9 @@ def recommend_books():
     return recommended_books
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(host='0.0.0.0', port=3000)
+=======
+    app.run(debug=True)
+>>>>>>> e7c8011b5837874c75a489dfebc0b632b7bfe183
 
