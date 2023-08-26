@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
       ),
       appBar: AppBar(
         centerTitle: false,
-        title: const Text("Home"),
+        title: Text("Hi, ${userAccount.displayName}"),
         elevation: 5,
         actions: [
           Padding(
