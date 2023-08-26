@@ -1,6 +1,9 @@
+import 'package:bookoo/auth/user_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:flutter/widgets.dart';
+import '../auth/login.dart';
+
 
 import 'firstpage.dart';
 
@@ -17,7 +20,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     avatar = widget.url;
-    // TODO: implement initState
+    UserPreferences.getUsername();
     super.initState();
   }
 
@@ -61,6 +64,7 @@ class _HomeState extends State<Home> {
         ),
         const Text("Find Book"),
       ][pageIndex],
+
     );
   }
 }
