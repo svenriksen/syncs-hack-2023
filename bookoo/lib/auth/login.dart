@@ -39,39 +39,48 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-        elevation: 5,
-      ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            ElevatedButton(
-                onPressed: () async {
-                  try {
-                    dynamic result = await _googleSignIn.signIn();
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.1), BlendMode.srcOver),
+            image: AssetImage("assets/main background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 2 + 15),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          dynamic result = await _googleSignIn.signIn();
 
-                    if (result != null) {
-                      await UserPreferences.setUsername(result.displayName);
-                      await UserPreferences.setId(result.id);
-                      await UserPreferences.setPhotoUrl(result.photoUrl);
+                          if (result != null) {
+                            await UserPreferences.setUsername(
+                                result.displayName);
+                            await UserPreferences.setId(result.id);
+                            await UserPreferences.setPhotoUrl(result.photoUrl);
 
-                      if (!context.mounted) return;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ),
-                      );
-                    }
-                  } catch (error) {
-                    debugPrint(error.toString());
-                  }
-                },
-                child: const Text("Sign in with Google"))
-          ]),
+                            if (!context.mounted) return;
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Home(),
+                              ),
+                            );
+                          }
+                        } catch (error) {
+                          debugPrint(error.toString());
+                        }
+                      },
+                      child: const Text("Sign in with Google"))
+                ]),
+          ),
         ),
       ),
     );

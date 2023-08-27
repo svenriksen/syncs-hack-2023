@@ -34,25 +34,20 @@ class UserPreferences {
     if (booksAdded == false) {
       booksAdded = true;
       return await _preferences?.setStringList(_keyUploadedBooks, [book]);
-    }
-    else {
-      List<String> addedBooks = _preferences?.getStringList(_keyUploadedBooks) ?? [];
+    } else {
+      List<String> addedBooks =
+          _preferences?.getStringList(_keyUploadedBooks) ?? [];
       addedBooks.add(book);
       return await _preferences?.setStringList(_keyUploadedBooks, addedBooks);
     }
   }
 
   static Future setRecentlyRead(String book) async {
-    if (recentlyRead == false) {
-      recentlyRead = true;
-      return await _preferences?.setStringList(_keyRecentlyRead, [book]);
-    }
-    else {
-      List<String> addedBooks = _preferences?.getStringList(_keyRecentlyRead) ?? [];
-      addedBooks.add(book);
-      return await _preferences?.setStringList(_keyRecentlyRead, addedBooks);
-    }
+    return await _preferences?.setString(_keyRecentlyRead, book);
   }
+
+  static String getRecentlyRead() =>
+      _preferences?.getString(_keyRecentlyRead) ?? '';
 
   static String getUsername() => _preferences?.getString(_keyUsername) ?? '';
 
@@ -60,9 +55,8 @@ class UserPreferences {
 
   static String getPhotoUrl() => _preferences?.getString(_keyPhotoUrl) ?? '';
 
-  static List<String> getUploadedBooks() => _preferences?.getStringList(_keyUploadedBooks) ?? [];
-  
-  static List<String> getRecentlyRead() => _preferences?.getStringList(_keyRecentlyRead) ?? [];
+  static List<String> getUploadedBooks() =>
+      _preferences?.getStringList(_keyUploadedBooks) ?? [];
 
   static void removePreferences() {
     _preferences?.remove(_keyUsername);

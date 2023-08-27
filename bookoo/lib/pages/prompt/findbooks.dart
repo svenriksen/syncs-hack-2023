@@ -83,7 +83,6 @@ class _FindBookState extends State<FindBook> {
                                     debugPrint(response.body);
                                     setState(() {
                                       afterResponse = jsonDecode(response.body);
-                                      debugPrint(afterResponse[0]["title"]);
                                     });
                                   } else {}
                                 }
