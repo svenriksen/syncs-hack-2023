@@ -82,7 +82,17 @@ class _ReadBookState extends State<ReadBook> {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter your time';
                                       }
-
+                                      var minutes =
+                                          int.parse(value.split(':')[0]);
+                                      var seconds =
+                                          int.parse(value.split(':')[1]);
+                                      if (minutes < 0 || seconds < 0) {
+                                        // raise error "minutes or seconds < 0"
+                                        return 'minutes or seconds < 0';
+                                      }
+                                      if (seconds >= 60) {
+                                        return "seconds needs to be between 0 and 59 (inclusive)";
+                                      }
                                       return null;
                                     },
                                   )),
@@ -109,9 +119,9 @@ class _ReadBookState extends State<ReadBook> {
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                             title: const Text("Choose music settings"),
-                            content: Stack(children: [
+                            content: const Stack(children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(top: 10),
                               )
                             ]),
                             actions: [
@@ -145,7 +155,7 @@ class _ReadBookState extends State<ReadBook> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 25, 15, 0),
+        padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
         child: (file != null)
             ? FutureBuilder(
                 future: _writeFileByte(file),

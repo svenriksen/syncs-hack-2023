@@ -24,7 +24,7 @@ class FirstPage extends StatefulWidget {
 
 Future<String> getJson() async {
   dynamic response = http.get(Uri.parse(
-      "http://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=bxw9TZLsBWkQEd0R2DtIv8uIBP0XKr5B"));
+      "http://api.nytimes.com/svc/books/v3/lists/overview.json?api-key="));
   return response.body;
 }
 
